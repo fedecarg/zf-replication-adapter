@@ -12,8 +12,7 @@ In the simplest replication scenario, the master copy of directory data is held 
 
 **Configuration array**
 
-<pre>
-<code>
+```php
 $config = array(
     'adapter'        => 'Pdo_Mysql',
     'driver_options' => array(PDO::ATTR_TIMEOUT=>5),
@@ -41,27 +40,24 @@ $config = array(
         array('host' => 'db.slave-2.com', 'username' => 'user3', 'password' => 'pass3')
     )
 );
-</code>
-</pre>
+```
 
 In the setup above, all writes will go to the master connection and all reads will be randomly distributed across the available slaves.
 
 ## Usage
-<pre>
-<code>
+
+```php
 $dataSource = new Zf_Orm_DataSource($config);
 $db = $dataSource->getConnection('slave')
 $query = $db->select()->from('test');
 $rows = $db->fetchAll($query);
-</code>
-</pre>
+```
 
 ## Multi-Master Replication
 
 This type of configuration can work with any number of consumer servers. Each consumer server holds a read-only replica. The consumers can receive updates from all the suppliers. The consumers also have referrals defined for all the suppliers to forward any update requests that the consumers receive.
 
-<pre>
-<code>
+```php
 $config = array(
     'adapter'        => 'Pdo_Mysql',
     'driver_options' => array(PDO::ATTR_TIMEOUT=>5),
@@ -75,8 +71,7 @@ $config = array(
         array('host' => 'db.master-2.com')
     )
 );
-</code>
-</pre>
+```
 
 ## Using a distributed memory caching system
 
@@ -84,8 +79,7 @@ Database connections are expensive and it's very inefficient for an application 
 
 To enable this option, you have to pass an instance of the Memcached adapter class:
 
-<pre>
-<code>
+```php
 class Bootstrap extends Zend_Application_Bootstrap_Base {
 
     protected function _initCache() {
@@ -98,13 +92,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Base {
         Zend_Registry::set('dataSource', $dataSource);
     }
 }
-</code>
-</pre>
+```
 
 And here is a short example of how the Replication Adapter might be used in a ZF application:
 
-<pre>
-<code>
+```php
 class TestDao {
 
     public function select() {
@@ -119,8 +111,7 @@ class TestDao {
         return $db->lastInsertId();
     }
 }
-</code>
-</pre>
+```
 
 # License
 
