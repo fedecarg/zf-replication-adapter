@@ -10,9 +10,11 @@ Zf_Orm_DataSource is a Zend Framework Replication Adapter class that supports th
 
 In the simplest replication scenario, the master copy of directory data is held in a single read-write replica on one server called the supplier server. The supplier server also maintains changelog for this replica. On another server, called the consumer server, there can be multiple read-only replicas.
 
-**Configuration array**
+### Configuration array
 
 ```php
+<?php
+
 $config = array(
     'adapter'        => 'Pdo_Mysql',
     'driver_options' => array(PDO::ATTR_TIMEOUT=>5),
@@ -47,6 +49,8 @@ In the setup above, all writes will go to the master connection and all reads wi
 ## Usage
 
 ```php
+<?php
+
 $dataSource = new Zf_Orm_DataSource($config);
 $db = $dataSource->getConnection('slave')
 $query = $db->select()->from('test');
@@ -58,6 +62,8 @@ $rows = $db->fetchAll($query);
 This type of configuration can work with any number of consumer servers. Each consumer server holds a read-only replica. The consumers can receive updates from all the suppliers. The consumers also have referrals defined for all the suppliers to forward any update requests that the consumers receive.
 
 ```php
+<?php
+
 $config = array(
     'adapter'        => 'Pdo_Mysql',
     'driver_options' => array(PDO::ATTR_TIMEOUT=>5),
@@ -80,6 +86,8 @@ Database connections are expensive and it's very inefficient for an application 
 To enable this option, you have to pass an instance of the Memcached adapter class:
 
 ```php
+<?php
+
 class Bootstrap extends Zend_Application_Bootstrap_Base {
 
     protected function _initCache() {
@@ -97,6 +105,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Base {
 And here is a short example of how the Replication Adapter might be used in a ZF application:
 
 ```php
+<?php
+
 class TestDao {
 
     public function select() {
@@ -113,7 +123,7 @@ class TestDao {
 }
 ```
 
-# License
+## License
 
 - New BSD License http://www.opensource.org/licenses/bsd-license.php
 - Copyright (c) 2010, Federico Cargnelutti. All rights reserved.
