@@ -126,4 +126,4 @@ class TestDao {
 ## License
 
 - New BSD License http://www.opensource.org/licenses/bsd-license.php
-- Copyright (c) 2010, Federico Cargnelutti. All rights reserved.
+- Copyright (c) 2008, Federico Cargnelutti. All rights reserved.
