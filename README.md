@@ -86,15 +86,19 @@ Database connections are expensive and it's very inefficient for an application 
 To enable this option, you have to pass an instance of the Memcached adapter class:
 
 ```php
+<<<<<<< HEAD
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Base {
+=======
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
+>>>>>>> Renamed class name and updated README
 
-    protected function _initCache() {
-    	...
+    public function _initCache() {
+    	// ...
     }
     
-    protected function _initDatabase() {
+    protected function _initDataSource() {
     	$config = include APPLICATION_PATH . '/config/database.php';
         $dataSource = new Zf_Orm_DataSource($config, $this->getResource('cache'), 'cache_tag');
         Zend_Registry::set('dataSource', $dataSource);
@@ -105,18 +109,29 @@ class Bootstrap extends Zend_Application_Bootstrap_Base {
 And here is a short example of how the Replication Adapter might be used in a ZF application:
 
 ```php
+<<<<<<< HEAD
 <?php
 
 class TestDao {
+=======
+abstract class Dao {
+>>>>>>> Renamed class name and updated README
 
-    public function select() {
-        $db = Zend_Registry::get('dataSource')->getConnection('slave');
+    public function getConnection($server) {
+        return Zend_Registry::get('dataSource')->getConnection($server);
+    }
+}
+
+class TestDao extends Dao {
+
+    public function findAll() {
+        $db = $this->getConnection('slave');
         $query = $db->select()->from('test');
         return $db->fetchAll($query);
     }
 
-    public function insert($data) {
-        $db = Zend_Registry::get('dataSource')->getConnection('master');
+    public function save($data) {
+        $db = $this->getConnection('master');
         $db->insert('test', $data);
         return $db->lastInsertId();
     }
@@ -125,5 +140,11 @@ class TestDao {
 
 ## License
 
+<<<<<<< HEAD
 - New BSD License http://www.opensource.org/licenses/bsd-license.php
 - Copyright (c) 2008, Federico Cargnelutti. All rights reserved.
+=======
+* Copyright (c) 2010, Federico Cargnelutti. All rights reserved
+* New BSD License http://www.opensource.org/licenses/bsd-license.php
+
+>>>>>>> Renamed class name and updated README

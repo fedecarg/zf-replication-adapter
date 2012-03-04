@@ -28,8 +28,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @category    Zf
- * @package     Zf_Orm
  * @author      Federico Cargnelutti <fedecarg@gmail.com>
  * @copyright   Copyright (c) 2010 Federico Cargnelutti
  * @license     New BSD License
@@ -37,16 +35,14 @@
  */
 
 /**
- * @category    Zf
- * @package     Zf_Orm
  * @author      Federico Cargnelutti <fedecarg@gmail.com>
  * @copyright   Copyright (c) 2010 Federico Cargnelutti
  * @license     New BSD License
  * @version     $Id: $
  */
-class Zf_Orm_DataSourceException extends Zf_Orm_Exception {}
+class DataSourceException extends Exception {}
 
-class Zf_Orm_DataSource
+class DataSource
 {    
     const SUPPLIER_SERVER     = 'master';
     const CONSUMER_SERVER     = 'slave';
@@ -171,7 +167,7 @@ class Zf_Orm_DataSource
      * 
      * @param string $server master (supplier) or slave (consumer)
      * @return Zend_Db_Adapter_Abstract
-     * @throws Zf_Orm_DataSourceException
+     * @throws DataSourceException
      */
     public function getConnection($server)
     {
@@ -199,7 +195,7 @@ class Zf_Orm_DataSource
             $failed[] = $key;
             $this->getCache()->save(array_unique($failed), $failedCacheKey, array(), 30);
         }
-        throw new Zf_Orm_DataSourceException(sprintf('Unable to connect to "%s" server', $server));
+        throw new DataSourceException(sprintf('Unable to connect to "%s" server', $server));
     }
     
     /**
@@ -240,14 +236,14 @@ class Zf_Orm_DataSource
      * 
      * @param Zend_Db_Adapter_Abstract $adapter
      * @return boolean
-     * @throws Zf_Orm_DataSourceException
+     * @throws DataSourceException
      */
     public function isConnected(Zend_Db_Adapter_Abstract $adapter)
     {
         try {
             return ($adapter->getConnection()) ? true : false;
         } catch (Zend_Exception $e) {
-            throw new Zf_Orm_DataSourceException($e->getMessage());
+            throw new DataSourceException($e->getMessage());
         }
     }
     
