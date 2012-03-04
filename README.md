@@ -4,7 +4,7 @@ Database replication is an option that allows the content of one database to be 
 
 The problem with monolithic database designs is that they don't establish an infrastructure that allows for rapid changes in business requirements. Here is where database replication comes into play. Replication can be used effectively for many different purposes, such as separating data entry and reporting, distributing load across servers, providing high availability, etc.
 
-Zf_Orm_DataSource is a Zend Framework Replication Adapter class that supports the most commonly used replication scenarios:
+DataSource is a Zend Framework Replication Adapter class that supports the most commonly used replication scenarios:
 
 ## Single-Master Replication
 
@@ -51,7 +51,7 @@ In the setup above, all writes will go to the master connection and all reads wi
 ```php
 <?php
 
-$dataSource = new Zf_Orm_DataSource($config);
+$dataSource = new DataSource($config);
 $db = $dataSource->getConnection('slave')
 $query = $db->select()->from('test');
 $rows = $db->fetchAll($query);
@@ -86,13 +86,9 @@ Database connections are expensive and it's very inefficient for an application 
 To enable this option, you have to pass an instance of the Memcached adapter class:
 
 ```php
-<<<<<<< HEAD
 <?php
 
-class Bootstrap extends Zend_Application_Bootstrap_Base {
-=======
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
->>>>>>> Renamed class name and updated README
 
     public function _initCache() {
     	// ...
@@ -100,7 +96,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     protected function _initDataSource() {
     	$config = include APPLICATION_PATH . '/config/database.php';
-        $dataSource = new Zf_Orm_DataSource($config, $this->getResource('cache'), 'cache_tag');
+        $dataSource = new DataSource($config, $this->getResource('cache'), 'cache_tag');
         Zend_Registry::set('dataSource', $dataSource);
     }
 }
@@ -109,13 +105,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 And here is a short example of how the Replication Adapter might be used in a ZF application:
 
 ```php
-<<<<<<< HEAD
 <?php
 
-class TestDao {
-=======
 abstract class Dao {
->>>>>>> Renamed class name and updated README
 
     public function getConnection($server) {
         return Zend_Registry::get('dataSource')->getConnection($server);
@@ -140,11 +132,5 @@ class TestDao extends Dao {
 
 ## License
 
-<<<<<<< HEAD
-- New BSD License http://www.opensource.org/licenses/bsd-license.php
-- Copyright (c) 2008, Federico Cargnelutti. All rights reserved.
-=======
 * Copyright (c) 2010, Federico Cargnelutti. All rights reserved
 * New BSD License http://www.opensource.org/licenses/bsd-license.php
-
->>>>>>> Renamed class name and updated README
